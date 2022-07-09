@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  grafana8:
+    image: grafana/grafana:latest
+    network_mode: "bridge"
+    container_name: grafana8
+    volumes:
+      - /home/huupv/docker/grafana/data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    restart: always
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb2
+    restart: always
+    ports:
+      - "8086:8086"
+      - "8089:8089/udp"
+    volumes:
+      - /home/username/docker/influxdb:/var/lib/influxdb
+    environment:
+      - INFLUXDB_UDP_ENABLED=true
+      - INFLUXDB_UDP_DATABASE=proxmox
+      - INFLUXDB_UDP_0_BATCH_SIZE=1000
+      - INFLUXDB_UDP_0_BATCH_PENDING=10
